@@ -18,10 +18,17 @@ export async function generateMetadata({ searchParams }: Props) {
   };
 }
 
-export default async function Detail({ params, searchParams }: Props) {
-  const { name } = await searchParams;
+const nameMapper = { seoul: "서울", NYC: "뉴욕", london: "런던" };
 
-  const res = await getForecast((await params).location);
+export function generateStaticParams() {
+  return [{ location: "seoul" }, { location: "london" }, { location: "NYC" }];
+}
+
+export default async function Detail({ params }: Props) {
+  const { location } = await params;
+
+  const name = nameMapper[location as keyof typeof nameMapper];
+  const res = await getForecast(location);
 
   return (
     <>

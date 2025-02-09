@@ -159,3 +159,14 @@ export const getForecast = async (location: string): Promise<Response> => {
 
   return res.json();
 }
+
+// npm
+// npm i
+// npm i 패키지명
+// npm i -D 패키지명
+
+
+// pnpm
+// pnpm i
+// pnpm add 패키지명
+// pnpm add -D 패키지명
