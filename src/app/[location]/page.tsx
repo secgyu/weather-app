@@ -2,25 +2,26 @@ import HomeButton from "../components/HomeButton";
 import { getForecast } from "../utils/getForecast";
 
 type Props = {
-  params: {
+  params: Promise<{
     location: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     name: string;
-  };
+  }>;
 };
 
-export function generateMetadata({ searchParams }: Props) {
+export async function generateMetadata({ searchParams }: Props) {
+  const { name } = await searchParams;
   return {
-    title: `날씨 앱 - ${searchParams.name}`,
-    description: `${searchParams.name} 날씨를 알려줍니다.`,
+    title: `날씨 앱 - ${name}`,
+    description: `${name} 날씨를 알려줍니다.`,
   };
 }
 
 export default async function Detail({ params, searchParams }: Props) {
-  const name = searchParams.name;
+  const { name } = await searchParams;
 
-  const res = await getForecast(params.location);
+  const res = await getForecast((await params).location);
 
   return (
     <>
